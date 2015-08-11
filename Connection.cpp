@@ -80,7 +80,7 @@ void Connection::handleRead(void)
 		return;
 	}
 
-	this->owner_->handleRead(this->fd_, buffer);
+	this->owner_->receive(this->fd_, buffer);
 	delete buffer;
 }
 

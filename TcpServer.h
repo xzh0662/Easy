@@ -31,6 +31,7 @@ public:
 	virtual int stop(void);
 
 	virtual int listen(const InetAddr& addr);
+	virtual int send(int fd, Buffer *buffer);
 	virtual int receive(int fd, Buffer *buffer);
 	virtual void handleClosed(int fd);
 
@@ -44,7 +45,6 @@ public:
 
 protected:
 	Connection* findConnection(int fd);
-	virtual int sendMessage(int fd, Buffer *buffer);
 
 private:
 	struct evconnlistener *listener_;

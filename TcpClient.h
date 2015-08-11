@@ -27,12 +27,10 @@ public:
 	virtual int stop(void);
 
 	virtual int connect(const InetAddr& serverAddr);
+	virtual int send(int fd, Buffer *buffer);
 	virtual int receive(int fd, Buffer *buffer);
 	virtual void handleClosed(int fd);
 	virtual void handleConnected(void);
-
-protected:
-	virtual int sendMessage(int fd, Buffer *buffer);
 
 private:
 	Connection *conn_;

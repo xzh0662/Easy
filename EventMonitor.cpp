@@ -19,17 +19,6 @@ EventMonitor::~EventMonitor(void)
 
 }
 
-void EventMonitor::handleRead(int fd, Buffer *buffer)
-{
-	this->receive(fd, buffer);
-}
-
-int EventMonitor::send(int fd, Buffer *buffer)
-{
-	this->sendMessage(fd, buffer);
-	return 0;
-}
-
 event_base* EventMonitor::eventBase(void)
 {
 	return this->event_base_;

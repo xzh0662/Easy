@@ -56,8 +56,21 @@ int TcpClient::connect(const InetAddr& serverAddr)
 	return ret;
 }
 
+int TcpClient::send(int fd, Buffer *buffer)
+{
+	if (this->conn_ == NULL)
+	{
+		return -1;
+	}
+	return this->conn_->send(buffer);
+}
+
 int TcpClient::receive(int fd, Buffer *buffer)
 {
+	if (this->conn_ == NULL)
+	{
+		return -1;
+	}
 	return 0;
 }
 
@@ -72,13 +85,4 @@ void TcpClient::handleClosed(int fd)
 void TcpClient::handleConnected(void)
 {
 	printf("TcpClient::handleConnected\n");
-}
-
-int TcpClient::sendMessage(int fd, Buffer *buffer)
-{
-	if (this->conn_ == NULL)
-	{
-		return -1;
-	}
-	return this->conn_->send(buffer);
 }

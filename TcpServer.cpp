@@ -64,8 +64,19 @@ int TcpServer::listen(const InetAddr& addr)
 	return 0;
 }
 
+int TcpServer::send(int fd, Buffer *buffer)
+{
+	Connection* conn = this->findConnection(fd);
+	if (conn == NULL)
+	{
+		return -1;
+	}
+
+	return conn->send(buffer);
+}
+
 int TcpServer::receive(int fd, Buffer *buffer)
-{//如果有接收线程则由接收线程回调，否则由event_base 线程调用
+{
 	Connection* conn = this->findConnection(fd);
 	if (conn == NULL)
 	{
@@ -99,15 +110,4 @@ Connection* TcpServer::findConnection(int fd)
 	}
 
 	return iter->second;
-}
-
-int TcpServer::sendMessage(int fd, Buffer *buffer)
-{
-	Connection* conn = this->findConnection(fd);
-	if (conn == NULL)
-	{
-		return -1;
-	}
-
-	return conn->send(buffer);
 }
