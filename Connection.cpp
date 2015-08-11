@@ -138,7 +138,7 @@ void Connection::eventCallback(bufferevent *bev, short events, void *data)
 //		printf("some other error\n");
 //	}
 
-	printf("eventCallback events %d", events);
+	printf("eventCallback events %d\n", events);
 
 	conn->handleClosed();
 }
