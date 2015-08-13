@@ -458,6 +458,26 @@ void Buffer::addBeginInt(const int &val)
 	}
 }
 
+void Buffer::addBeginShort(const short &val)
+{
+	if (this->evb_ == NULL)
+	{
+		return;
+	}
+
+	if (this->endian_ == big_endian)
+	{
+		for (size_t i = 0; i < sizeof(short); i++)
+		{
+			evbuffer_prepend(this->evb_, (void*) (&val + sizeof(short) - i - 1), sizeof(char));
+		}
+	}
+	else
+	{
+		evbuffer_prepend(this->evb_, (void*) &val, sizeof(short));
+	}
+}
+
 int Buffer::expand(const int size)
 {//预留空间
 	return evbuffer_expand(this->evb_, size);

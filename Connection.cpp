@@ -101,7 +101,14 @@ int Connection::send(const Buffer *buf)
 		return -1;
 	}
 
-	return bufferevent_write_buffer(this->bevent_, buf->evb_);
+	if (bufferevent_write_buffer(this->bevent_, buf->evb_) != 0 )
+	{
+		return -1;
+	}
+
+	delete buf;
+
+	return 0;
 }
 
 int Connection::fd(void)

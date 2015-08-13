@@ -60,6 +60,7 @@ public:
 	Buffer & operator =(const Buffer &buffer);
 
 	void addBeginInt(const int &val);
+	void addBeginShort(const short &val);
 
 	int expand(const int size);
 	int move(Buffer *srcBuffer);
@@ -74,7 +75,7 @@ private:
 
 #define BUFFER_NEW_ACTION(BUFFER, SIZE, ACTION)	\
 	do {	\
-		BUFFER = new Buffer();	\
+		BUFFER = new Easy::Buffer();	\
 		if (BUFFER->expand(SIZE)){ACTION;}	\
 	}while(0)	\
 
