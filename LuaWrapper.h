@@ -27,6 +27,7 @@ public:
 
 	int doString(const char *str);
 	int doFile(const char *fileName);
+	int path(const char *path);
 
 private:
 	static LuaWrapper* instance_;
