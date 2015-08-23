@@ -65,8 +65,15 @@ public:
 	int expand(const int size);
 	int move(Buffer *srcBuffer);
 
+	char* readLine(size_t* outLen, int type = EVBUFFER_EOL_CRLF);
+	int deleteLineEnd(int type = EVBUFFER_EOL_CRLF);
+
 	int addData(const void *data, size_t len);
 	int removeData(void *data, size_t len);
+
+
+
+	evbuffer * evb(void);
 
 private:
 	struct evbuffer *evb_;

@@ -488,6 +488,24 @@ int Buffer::move(Buffer *srcBuffer)
 	return evbuffer_add_buffer(this->evb_, srcBuffer->evb_);
 }
 
+char* Buffer::readLine(size_t* outLen, int type/* = EVBUFFER_EOL_CRLF*/)
+{ // must free return char*
+	return evbuffer_readln(this->evb_, outLen, (evbuffer_eol_style)type);
+}
+
+int Buffer::deleteLineEnd(int type/* = EVBUFFER_EOL_CRLF*/)
+{ // the end must in the first with this->evb_
+	struct evbuffer_ptr it;
+	size_t extra_drain;
+	it = evbuffer_search_eol(this->evb_, NULL, &extra_drain, (evbuffer_eol_style)type);
+	if (it.pos == 0)
+	{
+		evbuffer_drain(this->evb_, extra_drain);
+		return 0;
+	}
+	return it.pos;
+}
+
 int Buffer::addData(const void *data, size_t len)
 {
 	if (this->evb_ == NULL)
@@ -505,5 +523,10 @@ int Buffer::removeData(void *data, size_t len)
 		return -1;
 	}
 	return evbuffer_remove(this->evb_, data, len);
+}
+
+evbuffer * Buffer::evb(void)
+{
+	return this->evb_;
 }
 
